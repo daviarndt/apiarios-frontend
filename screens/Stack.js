@@ -3,6 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Login from '../screens/Login'
 import CadastroUsuario from '../screens/CadastroUsuario'
 
+import ListApiarios from '../screens/lists/ListaApiarios'
+import FormApiario from '../screens/forms/FormApiario'
+
+import ListCaixas from '../screens/lists/ListCaixas'
+import FormCaixa from '../screens/forms/FormCaixa'
+
 const Stack = createStackNavigator()
 
 export default function StackFunc (props) {
@@ -16,6 +22,18 @@ export default function StackFunc (props) {
             </Stack.Screen>
             <Stack.Screen name = "Cadastro de Usuário"
                 component={CadastroUsuario}>
+            </Stack.Screen>
+            <Stack.Screen name = "Lista de Apiários"
+                component={ListApiarios}>
+            </Stack.Screen>
+            <Stack.Screen name = "Novo Apiário"
+                component={FormApiario}>
+            </Stack.Screen>
+            <Stack.Screen name = "Lista de Caixas"
+                component={ListCaixas}>
+            </Stack.Screen>
+            <Stack.Screen name = "Nova Caixa"
+                component={FormCaixa}>
             </Stack.Screen>
         </Stack.Navigator>
     );

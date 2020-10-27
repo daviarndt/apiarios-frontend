@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 
-export default function Login() {
+export default function CadastroUsuario() {
     return (
       <View style={styles.container}>
           
