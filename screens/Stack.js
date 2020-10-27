@@ -9,6 +9,8 @@ import FormApiario from '../screens/forms/FormApiario'
 import ListCaixas from '../screens/lists/ListCaixas'
 import FormCaixa from '../screens/forms/FormCaixa'
 
+import Menu from '../screens/Menu'
+
 const Stack = createStackNavigator()
 
 export default function StackFunc (props) {
@@ -34,6 +36,10 @@ export default function StackFunc (props) {
             </Stack.Screen>
             <Stack.Screen name = "Nova Caixa"
                 component={FormCaixa}>
+            </Stack.Screen>
+            <Stack.Screen name = "Menu"
+                options={{ title: "Bem-Vindo!" }}
+                component={Menu}>
             </Stack.Screen>
         </Stack.Navigator>
     );
