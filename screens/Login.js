@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Button } from 'react-native';
-import { Header } from 'react-native-elements';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 
 export default function Login(props) {
 
