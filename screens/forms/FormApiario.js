@@ -1,11 +1,38 @@
-import React from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView, Alert, FlatList } from 'react-native';
 import Constants from 'expo-constants';
+import { Picker } from '@react-native-picker/picker';
 
-export default function FormApiario() {
+export default function FormApiario(props) {
+
+  const [data, setData] = useState([])
+  useEffect(() => {
+    fetch('https://servicodados.ibge.gov.br/api/v1/localidades/distritos')
+    .then((response) => {
+      if (!response.ok) {
+        Alert.alert("Ocorreu um erro: " + response.status)
+      }
+      console.log(response.json());
+      return response.json()
+    })
+    .then((json) => setData(json.distritos))
+    .catch((error) => console.error(error))
+  },[]);
+
+  function pickerChange(index) {
+    data.map((v, i) => {
+      if (index === i) {
+        this.setState({
+          nome: this.state.cidades[index].cidade
+        })
+      }
+    })
+  }
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
+
         <Text style={styles.logo}>Cadastro de Novo Apiário</Text>
 
         <View style={styles.inputView} >
@@ -16,8 +43,16 @@ export default function FormApiario() {
             maxLength={50}
           />
         </View>
-        <View>
-          {/* CIDADE PICKER */}
+        <View style={styles.inputView}>
+          <Picker
+            style={{ color: "#B4B4B4" }}
+            selectedValue={data}
+            onValueChange={(itemValue, itemIndex) => pickerChange(itemIndex)}>{
+              data.map((v) => {
+                return <Picker.Item label={v.nome} value={v.id} />
+              })
+            }
+          </Picker>
         </View>
         <View style={styles.inputView} >
           <TextInput
@@ -47,7 +82,7 @@ export default function FormApiario() {
         <TouchableOpacity style={styles.loginBtn}>
           <Text style={styles.loginText}>CADASTRAR</Text>
         </TouchableOpacity>
-        
+
       </View>
     </ScrollView>
   );
@@ -96,5 +131,5 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: "white"
-  }
+  },
 });

@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-nativ
 export default function Login(props) {
 
     function goToCadastroUsuario() {
-        props.navigation.navigate("Cadastro de Usuário")
+        props.navigation.navigate("Novo Apiário")
     }
 
     return (
