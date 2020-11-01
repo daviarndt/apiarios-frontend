@@ -1,7 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import ExternalApi from './external/Api.js';
 
-export default function CadastroUsuario() {
+export default function CadastroUsuario(props) {
+  const Api = new ExternalApi();
+
+  function returnToLogin() {
+    props.navigation.navigate("Login")
+  }
+
+  const register = () => {
+    Api.createUser(
+      document.querySelector('[placeholder="Nome Completo"]').value,
+      document.querySelector('[placeholder="CPF"]').value
+    ).then(
+      returnToLogin,
+      ()=>{
+        console.log("Não foi possivel efetuar o registro")
+      }
+    )
+  }
+
     return (
       <View style={styles.container}>
           
@@ -22,7 +41,7 @@ export default function CadastroUsuario() {
             />
         </View>
 
-        <TouchableOpacity style={styles.loginBtn}>
+        <TouchableOpacity style={styles.loginBtn} onPress={register}>
           <Text style={styles.loginText}>CADASTRAR</Text>
         </TouchableOpacity>
 

@@ -1,10 +1,28 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import ExternalApi from './external/Api.js';
 
 export default function Login(props) {
+    const Api = new ExternalApi();
 
     function goToCadastroUsuario() {
         props.navigation.navigate("Cadastro de Usuário")
+    }
+
+    function goToListaDeApiarios() {
+      props.navigation.navigate("Lista de Apiários")
+    }
+
+    const loggin = () => {
+      Api.authenticateUser(
+        document.querySelector('[placeholder="Usuário"]').value,
+        document.querySelector('[placeholder="Senha"]').value
+      ).then(
+        goToListaDeApiarios,
+        ()=>{
+          console.log("Arrumar mensagem de Não foi possivel efetuar o login")
+        }
+      )
     }
 
     return (
@@ -30,7 +48,7 @@ export default function Login(props) {
         {/* <TouchableOpacity>
           <Text style={styles.forgot}>Esqueceu a Senha?</Text>
         </TouchableOpacity> */}
-        <TouchableOpacity style={styles.loginBtn}>
+        <TouchableOpacity style={styles.loginBtn} onPress={loggin}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={goToCadastroUsuario}>
