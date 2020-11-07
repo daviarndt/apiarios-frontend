@@ -1,15 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import ExternalApi from './external/Api.js';
+import Cache from './external/Cache.js';
 
 export default function Login(props) {
-    const Api = new ExternalApi();
+  const Api = new ExternalApi();
+  const cache = new Cache();
 
     function goToCadastroUsuario() {
         props.navigation.navigate("Cadastro de Usuário")
     }
 
-    function goToListaDeApiarios() {
+    function goToListaDeApiarios(response) {
+      cache.set('token', response.data.dados.token)
       props.navigation.navigate("Lista de Apiários")
     }
 
@@ -20,7 +23,7 @@ export default function Login(props) {
       ).then(
         goToListaDeApiarios,
         ()=>{
-          console.log("Arrumar mensagem de Não foi possivel efetuar o login")
+          console.log("Não foi possivel efetuar o login")
         }
       )
     }
@@ -33,6 +36,7 @@ export default function Login(props) {
           <TextInput  
             style={styles.inputText}
             placeholder="Usuário" 
+            value="48087992601"
             placeholderTextColor="#B4B4B4"
             />
         </View>
@@ -41,6 +45,7 @@ export default function Login(props) {
             secureTextEntry
             style={styles.inputText}
             placeholder="Senha" 
+            value="48087992601"
             placeholderTextColor="#B4B4B4"
             />
         </View>

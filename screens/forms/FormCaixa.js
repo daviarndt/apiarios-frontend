@@ -1,8 +1,28 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
+import ExternalApi from './../external/Api.js';
 
-export default function FormCaixa() {
+export default function FormCaixa(props) {
+  const Api = new ExternalApi();
+
+  function goToListaDeCaixas() {
+    props.navigation.navigate("Lista de Caixas")
+  }
+
+  const cadastro = () => {
+    Api.createCaixa(
+      props.route.params,
+      document.querySelector('[placeholder="Modelo"]').value,
+      document.querySelector('[placeholder="Número de Registro"]').value,
+    ).then(
+      goToListaDeCaixas,
+      () => {
+        console.log("Não foi possivel criar nova caixa")
+      }
+    )
+  }
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
@@ -16,14 +36,19 @@ export default function FormCaixa() {
             maxLength={30}
           />
         </View>
-        <View>
-          {/* MODELO PICKER */}
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Modelo"
+            placeholderTextColor="#B4B4B4"
+            maxLength={30}
+          />
         </View>
 
-        <TouchableOpacity style={styles.loginBtn}>
+        <TouchableOpacity style={styles.loginBtn} onPress={cadastro}>
           <Text style={styles.loginText}>CADASTRAR</Text>
         </TouchableOpacity>
-        
+
       </View>
     </ScrollView>
   );

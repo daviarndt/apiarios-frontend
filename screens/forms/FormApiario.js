@@ -1,8 +1,30 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
+import ExternalApi from './../external/Api.js';
 
-export default function FormApiario() {
+export default function FormApiario(props) {
+  const Api = new ExternalApi();
+  
+  function goToListaDeApiarios() {
+    props.navigation.navigate("Lista de Apiários")
+  }
+
+  const cadastro = () => {
+    Api.createApiario(
+      document.querySelector('[placeholder="Cidade"]').value,
+      document.querySelector('[placeholder="Endereço"]').value,
+      document.querySelector('[placeholder="Latitude"]').value,
+      document.querySelector('[placeholder="Longitude"]').value,
+      document.querySelector('[placeholder="Nome"]').value
+    ).then(
+      goToListaDeApiarios,
+      ()=>{
+        console.log("Não foi possivel criar novo apiario")
+      }
+    )
+  }
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
@@ -10,17 +32,25 @@ export default function FormApiario() {
 
         <View style={styles.inputView} >
           <TextInput
+              value="TesteTesteNome"
             style={styles.inputText}
             placeholder="Nome"
             placeholderTextColor="#B4B4B4"
             maxLength={50}
           />
         </View>
-        <View>
-          {/* CIDADE PICKER */}
+        <View style={styles.inputView} >
+        <TextInput
+            value="TesteTesteCidade"
+            style={styles.inputText}
+            placeholder="Cidade"
+            placeholderTextColor="#B4B4B4"
+            maxLength={150}
+          />
         </View>
         <View style={styles.inputView} >
           <TextInput
+              value="TesteTesteEndereço"
             style={styles.inputText}
             placeholder="Endereço"
             placeholderTextColor="#B4B4B4"
@@ -29,6 +59,7 @@ export default function FormApiario() {
         </View>
         <View style={styles.inputView} >
           <TextInput
+              value="TesteTesteLatitude"
             style={styles.inputText}
             placeholder="Latitude"
             placeholderTextColor="#B4B4B4"
@@ -37,6 +68,7 @@ export default function FormApiario() {
         </View>
         <View style={styles.inputView} >
           <TextInput
+              value="TesteTesteLongitude"
             style={styles.inputText}
             placeholder="Longitude"
             placeholderTextColor="#B4B4B4"
@@ -44,7 +76,7 @@ export default function FormApiario() {
           />
         </View>
 
-        <TouchableOpacity style={styles.loginBtn}>
+        <TouchableOpacity style={styles.loginBtn} onPress={cadastro}>
           <Text style={styles.loginText}>CADASTRAR</Text>
         </TouchableOpacity>
         
@@ -63,7 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A1A1A',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: Constants.statusBarHeight
+    marginTop: Constants.statusBarHeight+20
   },
   logo: {
     fontWeight: "bold",
