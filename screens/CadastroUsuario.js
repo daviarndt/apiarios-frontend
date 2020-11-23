@@ -1,11 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import ExternalApi from './external/Api.js';
+import Cache from './external/Cache.js';
 
 export default function CadastroUsuario(props) {
   const Api = new ExternalApi();
+  const cache = new Cache();
 
-  function returnToLogin() {
+  function returnToLogin(response) {
+    cache.set('userId', response.data.dados.id)
     props.navigation.navigate("Login")
   }
 

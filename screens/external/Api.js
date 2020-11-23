@@ -8,9 +8,6 @@ const apiUrl = 'https://cors-anywhere.herokuapp.com/https://apiarios-daviarndt.h
 export default class API extends React.Component {
     /* Caixas */
     async createCaixa(apiarioId, modelo, numeroRegistro) {
-        console.log(apiarioId)
-        console.log(modelo)
-        console.log(numeroRegistro)
         var url = apiUrl + "api/caixa";
         var data = {
             "apiarioId": apiarioId,
@@ -130,7 +127,17 @@ export default class API extends React.Component {
             "senha": cpf
         };
 
-        return await axios.post(url, data)
+        return await axios.post(
+            url,
+            data,
+            {
+                headers: {
+                    'Access-Control-Allow-Origin': window.location.host,
+                    'Access-Control-Allow-Methods': 'DELETE, POST, GET, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
+                }
+            }
+        )
     }
 
     async createUser(nome, cpf, senha) {
