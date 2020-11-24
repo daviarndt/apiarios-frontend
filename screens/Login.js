@@ -7,28 +7,6 @@ export default function Login(props) {
   const Api = new ExternalApi();
   const cache = new Cache();
   let cidades = [];
-  // { 
-  //   title: 'Londrina',
-  //   data: [
-  //     [
-  //       '55',
-  //       'Nome De Teste',
-  //       'Av Paul Harris, 88',
-  //       'lat234,234234324324',
-  //       'long250,234234324324'
-  //     ]
-  //   ],
-  //   title: 'Londrina',
-  //   data: [
-  //     [
-  //       '673',
-  //       'Anthony Tesche',
-  //       'Rua Paraguai, 528',
-  //       'latitude',
-  //       'longitude'
-  //     ]
-  //   ]
-  // };
 
     function goToCadastroUsuario() {
         props.navigation.navigate("Cadastro de Usuário")
@@ -36,7 +14,7 @@ export default function Login(props) {
 
     function goToListaDeApiarios(response) {
       cache.set('token', response.data.dados.token)
-      Api.buscarApiariosPorUsuario(23)
+      Api.buscarApiariosPorUsuario(27)
       .then(
         (response) => {
           response.data.dados.forEach((element) => {
@@ -69,7 +47,6 @@ export default function Login(props) {
           <TextInput  
             style={styles.inputText}
             placeholder="Usuário" 
-            value="84931183034"
             placeholderTextColor="#B4B4B4"
             />
         </View>
@@ -78,7 +55,6 @@ export default function Login(props) {
             secureTextEntry
             style={styles.inputText}
             placeholder="Senha" 
-            value="84931183034"
             placeholderTextColor="#B4B4B4"
             />
         </View>

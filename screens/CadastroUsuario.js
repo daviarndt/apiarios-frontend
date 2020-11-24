@@ -9,6 +9,7 @@ export default function CadastroUsuario(props) {
 
   function returnToLogin(response) {
     cache.set('userId', response.data.dados.id)
+    cache.set('userName', document.querySelector('[placeholder="Nome Completo"]').value)
     props.navigation.navigate("Login")
   }
 

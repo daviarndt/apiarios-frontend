@@ -32,7 +32,6 @@ export default function FormApiario(props) {
 
         <View style={styles.inputView} >
           <TextInput
-            value={props.route.params ? props.route.params.nome : ''}
             style={styles.inputText}
             placeholder="Nome"
             placeholderTextColor="#B4B4B4"
@@ -41,7 +40,6 @@ export default function FormApiario(props) {
         </View>
         <View style={styles.inputView} >
         <TextInput
-            value={props.route.params ? props.route.params.cidade : ''}
             style={styles.inputText}
             placeholder="Cidade"
             placeholderTextColor="#B4B4B4"
@@ -50,7 +48,6 @@ export default function FormApiario(props) {
         </View>
         <View style={styles.inputView} >
           <TextInput
-            value={props.route.params ? props.route.params.endereco : ''}
             style={styles.inputText}
             placeholder="Endereço"
             placeholderTextColor="#B4B4B4"
@@ -59,7 +56,6 @@ export default function FormApiario(props) {
         </View>
         <View style={styles.inputView} >
           <TextInput
-            value={props.route.params ? props.route.params.latitude : ''}
             style={styles.inputText}
             placeholder="Latitude"
             placeholderTextColor="#B4B4B4"
@@ -68,7 +64,6 @@ export default function FormApiario(props) {
         </View>
         <View style={styles.inputView} >
           <TextInput
-            value={props.route.params ? props.route.params.longitude : ''}
             style={styles.inputText}
             placeholder="Longitude"
             placeholderTextColor="#B4B4B4"

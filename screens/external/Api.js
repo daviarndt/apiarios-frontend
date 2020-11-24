@@ -104,6 +104,7 @@ export default class API extends React.Component {
 
     async ocultarApiarioPorId(id) {
         var url = apiUrl + "api/apiario/ocultar/" + id;
+        console.log(cache.get('token'))
         return await axios.post(
             url,
             {

@@ -3,74 +3,85 @@ import { StyleSheet, View, SafeAreaView, TouchableOpacity, Text, SectionList, Im
 import ExternalApi from '../external/Api.js';
 import Trash from '../../assets/menu/exclude.png'
 import Apiario from '../../assets/menu/apiario.png'
-import { withTheme } from 'react-native-elements';
 
 export default function ListApiarios(props) {
   const Api = new ExternalApi();
+  const caixa = [];
 
   function excluirApiario(id) {
+    console.log('hdgjkashdkjash')
     Api.ocultarApiarioPorId(id).then(
       console.log('Excluido com sucesso'),
       console.log('Erro ao excluir')
     )
   }
 
-  function redirectCadApiario(id) {
-    if (id == null || id == undefined) {
-      props.navigation.navigate("Novo Apiário")
-    } else {
-      Api.buscarPorApiarioId(id).then(
-        (response) => {
-          props.navigation.navigate("Novo Apiário", response.data.dados)
-        },
-        console.log('Deu Ruim')
-      )
-    }
+  function redirectFullCadApiario() {
+    Api.buscarPorApiarioId(id).then(
+      (response) => {
+        props.navigation.navigate("Novo Apiário", response.data.dados)
+      },
+      console.log('Deu Ruim')
+    )
   }
-  function redirectCadCaixa() {
-    props.navigation.navigate("Nova Caixa")
+
+  function redirectCadApiario() {
+      props.navigation.navigate("Novo Apiário")
+  }
+
+  function redirectListCaixa(id) {
+    Api.buscarPorApiarioId(id)
+    .then(
+      (response) => {
+        response.data.dados.forEach((element) => {
+          caixa.push({ title: element.modelo, data: [[element.apiarioId, element.id, element.modelo, element.numeroRegistro ]] })
+        })
+        props.navigation.navigate("Lista de Caixas", caixa)
+      },
+      props.navigation.navigate("Nova Caixa", id)
+    )
   }
 
   const Item = ({ title }) => (
-    <View style={styles.item}>
-      <View style={styles.cardHeader}>
+    <View style={styles.item} onPress={() => redirectListCaixa(title[0])}>
+      <View style={styles.cardHeader} onPress={() => redirectListCaixa(title[0])}>
         <View style={styles.cardEdit}>
-          <Image
+          {/* <Image
             source={Apiario}
             style={styles.cardIcons}
             alt="Editar"
-            onPress={() => redirectCadApiario(title[0])}
-          />
+            onPress={() => redirectFullCadApiario(title[0])}
+          /> */}
         </View>
-        <View style={styles.cardName}>
-          <Text name="apiario-name">{title[1]}</Text>
+        <View style={styles.cardName} onPress={() => redirectListCaixa(title[0])}>
+          <Text name="apiario-name" style={styles.nameText} onPress={() => redirectListCaixa(title[0])}>{title[1]}</Text>
         </View>
         <View style={styles.cardExclude}>
+        <TouchableOpacity onPress={() => excluirApiario(title[0])}>
           <Image
             source={Trash}
             style={styles.cardIcons}
             alt="Excluir"
             onPress={() => excluirApiario(title[0])}
           />
+        </TouchableOpacity>
         </View>
       </View>
 
-      <View style={styles.center}>
-        <Text name="apiario-endereco" style={styles.title}>{title[2]}</Text>
+      <View style={styles.center} onPress={() => redirectListCaixa(title[0])}>
+        <Text name="apiario-endereco" style={styles.centerText} onPress={() => redirectListCaixa(title[0])}>{title[2]}</Text>
       </View>
 
-      <View style={styles.footer}>
-        <View style={styles.cardCity}>
-          <Text name="apiario-city" style={styles.title}>{title[5]}</Text>
+      <View style={styles.footer} onPress={() => redirectListCaixa(title[0])}>
+        <View style={styles.cardCity} onPress={() => redirectListCaixa(title[0])}>
+          <Text name="apiario-city" style={styles.cityText} onPress={() => redirectListCaixa(title[0])}>{title[5]}</Text>
         </View>
         <View />
-        <View style={styles.cardCord}>
-          <View style={styles.cardLat}>
-            <Text name="apiario-lat" style={styles.cord}>LAT: {title[3]}</Text>
-            <Text name="apiario-long" style={styles.cord}>LONG: {title[4]}</Text>
+        <View style={styles.cardCord} onPress={() => redirectListCaixa(title[0])}>
+          <View style={styles.cardLat} onPress={() => redirectListCaixa(title[0])}>
+            <Text name="apiario-lat" style={styles.cord} onPress={() => redirectListCaixa(title[0])}>LAT: {title[3]}</Text>
+            <Text name="apiario-long" style={styles.cord} onPress={() => redirectListCaixa(title[0])}>LONG: {title[4]}</Text>
           </View>
-          {/* <View style={styles.cardLong}>
-          </View> */}
         </View>
       </View>
     </View>
@@ -78,23 +89,12 @@ export default function ListApiarios(props) {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.btnGroup}>
-        <View style={styles.btnsForCads}>
-          <TouchableOpacity
-            style={styles.btnCad}
-            onPress={redirectCadCaixa}>
-            <Text>Nova Caixa</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.btnsForCads}>
-          <TouchableOpacity
-            style={styles.btnCad}
-            onPress={redirectCadApiario}>
-            <Text>Cadastro de Apiarios</Text>
-          </TouchableOpacity>
-        </View>
-      </View> */}
-      <Text style={styles.mainTitle}> Apiários </Text>
+      <View style={styles.mainTitleView}>
+        <Text style={styles.mainTitle}> Apiários </Text>
+        <TouchableOpacity onPress={redirectCadApiario} style={styles.mainBtn}>
+          <Text style={styles.mainTextBtn}> Novo Apiário +</Text>
+        </TouchableOpacity>
+      </View>
       <SafeAreaView>
         <SectionList
           sections={props.route.params}
@@ -102,7 +102,6 @@ export default function ListApiarios(props) {
           renderItem={({ item }) => <Item title={item} />}
           renderSectionHeader={({ section: { title } }) => (
             <View />
-            // <Text style={styles.header}>{title}</Text>
           )}
         />
       </SafeAreaView>
@@ -112,20 +111,40 @@ export default function ListApiarios(props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#1A1A1A",
+    backgroundColor: "white",
     flex: 1,
+  },
+  mainTitleView: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    justifyContent: 'center',
+    textAlign: 'center',
   },
   mainTitle: {
     marginTop: 5,
-    marginLeft: 10,
+    marginBottom: 5,
     padding: 5,
-    fontSize: 16,
-    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  mainBtn: {
+    marginTop: 5,
+    padding: 5,
+  },
+  mainTextBtn: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  addApiario: {
+    fontSize: 64,
     fontWeight: 'bold',
   },
   item: {
-    backgroundColor: 'grey',
+    backgroundColor: 'white',
     padding: 5,
+    marginLeft: 5,
+    marginRight: 5,
+    width: '405px',
     marginVertical: 8,
     textAlign: 'center',
     boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
@@ -142,11 +161,16 @@ const styles = StyleSheet.create({
     float: 'right',
     marginLeft: '10%',
   },
+  nameText: {
+    fontSize: 16,
+    fontFamily: 'Armata',
+  },
   cardExclude: {
     justifyContent: 'center',
-    marginLeft: '63%',
+    marginLeft: '55%',
   },
   cardEdit: {
+    marginLeft: 15,
     justifyContent: 'center',
   },
   cardIcons: {
@@ -161,6 +185,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
   },
+  centerText: {
+    fontSize: 16,
+    fontFamily: 'Armata',
+  },
 
 
   footer: {
@@ -172,11 +200,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
   },
+  cityText: {
+    fontSize: 14,
+    fontFamily: 'Armata',
+  },
   cardCord: {
     flexDirection: 'column',
   },
   cord: {
     fontSize: 12,
+    fontFamily: 'Armata',
   },
   cardLat: {
     justifyContent: 'center',

@@ -23,22 +23,75 @@ export default function StackFunc (props) {
                 component={Login}>
             </Stack.Screen>
             <Stack.Screen name = "Cadastro de Usuário"
+                options={{
+                    title:"Pagina de Cadastro",
+                    headerStyle: {
+                        backgroundColor: '#f5b041',
+                    },
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
                 component={CadastroUsuario}>
             </Stack.Screen>
             <Stack.Screen name = "Lista de Apiários"
+                options={{
+                    title:"Lista de Apiários",
+                    headerStyle: {
+                        backgroundColor: '#f5b041',
+                    },
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
                 component={ListApiarios}>
             </Stack.Screen>
             <Stack.Screen name = "Novo Apiário"
+                options={{
+                    title:"Novo Apiário",
+                    headerStyle: {
+                        backgroundColor: '#f5b041',
+                    },
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
                 component={FormApiario}>
             </Stack.Screen>
             <Stack.Screen name = "Lista de Caixas"
+                options={{
+                    title:"Lista de Caixas",
+                    headerStyle: {
+                        backgroundColor: '#f5b041',
+                    },
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
                 component={ListCaixas}>
             </Stack.Screen>
             <Stack.Screen name = "Nova Caixa"
+                options={{
+                    title:"Nova Caixa",
+                    headerStyle: {
+                        backgroundColor: '#f5b041',
+                    },
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
                 component={FormCaixa}>
             </Stack.Screen>
             <Stack.Screen name = "Menu"
-                options={{ title: "Bem-Vindo!" }}
+                options={{
+                    title:"Bem-Vindo!",
+                    headerStyle: {
+                        backgroundColor: '#f5b041',
+                    },
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
                 component={Menu}>
             </Stack.Screen>
         </Stack.Navigator>
